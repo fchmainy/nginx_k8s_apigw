@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "microapigw.fullname" . }}
+  namespace: "{{ .Values.namespace }}"
+  labels:
+    {{- include "microapigw.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "microapigw.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "microapigw.selectorLabels" . | nindent 8 }}
+    spec:
+#      {{- if .Values.image.imagePullSecretName }}
+#      imagePullSecrets: "{{ .Values.image.imagePullSecretName }}"
+#      {{- end }}
+
+
+      serviceAccountName: {{ include "microapigw.serviceAccountName" . }}
+
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+          resources:
+            limits:
+              memory: 2Gi
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          env:
+          - name: CTRL_IP
+            value: "{{ .Values.environment.ctrlIP }}" 
+          - name: LOCATION
+            value: "{{ .Values.environment.ctrlLOC }}"
+          - name: SERVICE
+            value: "{{ .Values.environment.ctrlENV }}"
+          - name: CTRL_USERNAME
+            value: "{{ .Values.environment.ctrlUSER }}"
+          - name: CTRL_PASSWORD
+            value: "{{ .Values.environment.ctrlPASS }}"
+          - name: GATEWAY
+            value: "{{ .Values.environment.ctrlGW }}"
+#          livenessProbe:
+#            httpGet:
+#              path: /
+#              port: http
+#          readinessProbe:
+#            httpGet:
+#              path: /
+#              port: http

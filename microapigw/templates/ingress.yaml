@@ -1,0 +1,17 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: {{ include "microapigw.fullname" . }}
+  namespace: "{{ .Values.namespace }}"
+spec:
+  ingressClassName: "{{ .Values.ingress.className }}"
+  host: "{{ .Values.ingress.host }}"
+  upstreams:
+  - name: {{ include "microapigw.fullname" . }}
+    service: {{ include "microapigw.fullname" . }}
+    port: {{ .Values.service.port }}
+  routes:
+  - path: /
+    action:
+      proxy:
+        upstream: {{ include "microapigw.fullname" . }}
