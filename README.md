@@ -33,6 +33,7 @@ This same concept (i.e. using the same code) can be applied to:
 I am very soon changing the build behavior so it gets the license directly from the controller.
 
 ### Setting environment variables
+<pre>
 <i># Public Fully Qualified Domain Name for the Controller</i>
 export TF_VAR_ctrl_fqdn=""
 <i># Private IP Address of the Controller, so the instance can communicate locally</i>
@@ -49,6 +50,7 @@ export TF_VAR_ctrlpassword=""
 export TF_VAR_ctrl_env=""
 <i># Private Registry URL and path</i>
 export TF_VAR_PRIVATE_REGISTRY=registry.gitlab.com/path
+</pre>
 
 Note: as you can see, those are TF_VAR_ prefixed variables as i like to use them consistently across other projects (see my other nginx repos).
 
@@ -96,8 +98,8 @@ helm install apigw ./microapigw \
 
 <pre>
 Notes:
-- \*  a private IP is prefered to a public IP in a case of a public cloud as the agent controller install script will try to join the controller publicly known FQDN, so in a case of a public cloud deployment you will have to deal with security concerns by leaving your private realm, getting back through your Internet gateway and pass all the potential Security Groups and ACL checks.
-- \*\*The first instance of the API Gateway will first, create the instance in the infrastructure list, then create the **service environment** and the **service gateway**  on the controller. Any new instances created from a **scaling out** events, will only join the existing environment and gateway and pull the latest working configuration.
+- *  a private IP is prefered to a public IP in a case of a public cloud as the agent controller install script will try to join the controller publicly known FQDN, so in a case of a public cloud deployment you will have to deal with security concerns by leaving your private realm, getting back through your Internet gateway and pass all the potential Security Groups and ACL checks.
+- **The first instance of the API Gateway will first, create the instance in the infrastructure list, then create the **service environment** and the **service gateway**  on the controller. Any new instances created from a **scaling out** events, will only join the existing environment and gateway and pull the latest working configuration.
 </pre>
 
 
