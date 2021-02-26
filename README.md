@@ -100,6 +100,7 @@ helm install apigw ./microapigw \
 Notes:
 *  a private IP is prefered to a public IP in a case of a public cloud as the agent controller install script will try to join the controller publicly known FQDN, so in a case of a public cloud deployment you will have to deal with security concerns by leaving your private realm, getting back through your Internet gateway and pass all the potential Security Groups and ACL checks.
 ** The first instance of the API Gateway will first, create the instance in the infrastructure list, then create the **service environment** and the **service gateway**  on the controller. Any new instances created from a **scaling out** events, will only join the existing environment and gateway and pull the latest working configuration.
+** In case of a scaling-in event, the destruction of the replica will send a termination signal we are catching which is deregistring the instance from the gateway and the infrastrure. 
 </pre>
 
 
