@@ -13,7 +13,7 @@ Kubernetes Micro-Services (MS) oftenly "consume" other KMS services as an API, w
 - and the security of your MS-2-MS communications. 
 
 <p align="center">
-	<img width="200" src="docs/topology.png" alt="V1 logo">
+	<img width="200" src="https://github.com/fchmainy/nginx_k8s_apigw/raw/main/docs/images/topology.png" alt="APIMK8S Topo">
 </p>
 
 This same concept (i.e. using the same code) can be applied to:
